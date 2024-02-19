@@ -1,0 +1,30 @@
+sequenceDiagram
+    participant browser
+    participant server
+    participant spa
+    participant database
+
+    browser->>server: GET https://studies.cs.helsinki.fi/exampleapp/spa
+    activate server
+    server-->>browser: HTML document for SPA
+    deactivate server
+
+    browser->>server: GET https://studies.cs.helsinki.fi/exampleapp/main.js
+    activate server
+    server-->>browser: the JavaScript file for SPA
+    deactivate server
+
+    browser->>spa: SPA initializes and takes control
+    activate spa
+
+    spa->>server: GET https://studies.cs.helsinki.fi/exampleapp/data.json
+    activate server
+    server->>database: Fetch notes data
+    activate database
+    database-->>server: Notes data
+    deactivate database
+    server-->>spa: Notes data
+    deactivate server
+
+    spa--xserver: Subsequent interactions may occur based on user actions
+    deactivate spa
