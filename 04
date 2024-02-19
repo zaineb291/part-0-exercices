@@ -1,0 +1,22 @@
+sequenceDiagram
+    participant browser
+    participant server
+    participant database
+
+    browser->>server: POST https://studies.cs.helsinki.fi/exampleapp/notes (new note data)
+    activate server
+    server->>database: Insert new note data into the database
+    activate database
+    database-->>server: Confirmation of successful insertion
+    deactivate database
+    server-->>browser: Confirmation response with new note details
+    deactivate server
+
+    browser--xserver: Request to fetch all notes (GET https://studies.cs.helsinki.fi/exampleapp/notes)
+    activate server
+    server-->>database: Fetch all notes from the database
+    activate database
+    database-->>server: Retrieved notes
+    deactivate database
+    server-->>browser: List of all notes (including the new one)
+    deactivate server
