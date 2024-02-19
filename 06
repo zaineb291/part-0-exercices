@@ -1,0 +1,22 @@
+sequenceDiagram
+    participant browser
+    participant server
+    participant spa
+    participant database
+
+    browser->>spa: User interacts with the SPA to create a new note
+    activate spa
+
+    spa-->>spa: Validate and collect new note data
+
+    spa->>server: POST https://studies.cs.helsinki.fi/exampleapp/new_note
+    activate server
+    server->>database: Insert new note data into the database
+    activate database
+    database-->>server: Confirmation of successful insertion
+    deactivate database
+    server-->>spa: Confirmation response with new note details
+    deactivate server
+
+    spa--xserver: Subsequent interactions may occur based on user actions
+    deactivate spa
